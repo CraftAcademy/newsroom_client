@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Grid, Button, Form, Input } from "semantic-ui-react";
 import { auth } from "../modules/auth";
 import { useHistory } from "react-router-dom";
@@ -36,7 +36,6 @@ const SignUpForm = (props) => {
       });
     }
   };
-
   return (
     <>
       <Grid className="login-container" verticalAlign="middle">

@@ -5,7 +5,7 @@ import { useHistory } from "react-router-dom";
 import "../css/index.css";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { useSelector } from "react-redux";
+import { useSelector } from 'react-redux'
 
 const LoginForm = (props) => {
   const [errorMessage, setErrorMessage] = useState("");
@@ -29,12 +29,10 @@ const LoginForm = (props) => {
       setErrorMessage(error.response.data.errors[0]);
     }
   };
-
   const signUp_message =
-    signupMessage === "" ? (
+    props.uid === "" ? (
       <p>
-        {t("Don't have an account?")}
-        <br></br>
+        {t("Don't have an account?")}<br></br>
         <Link id="signup" name="Signup" to={{ pathname: "/sign_up" }}>
           {t("Click here to sign up")}
         </Link>
@@ -42,7 +40,6 @@ const LoginForm = (props) => {
     ) : (
       <p id="signedup">{t("Signed up sucessfully!")}</p>
     );
-
   return (
     <>
       <Grid className="login-container" verticalAlign="middle">
@@ -51,13 +48,13 @@ const LoginForm = (props) => {
             {errorMessage}
           </h3>
           <Form unstackable id="login-form" onSubmit={login}>
-            <h1>{t("Log in")}</h1>
-            <h4>{t("Email")}</h4>
+            <h1>{t('Log in')}</h1>
+            <h4>{t('Email')}</h4>
             <Input name="email" type="email" id="email"></Input>
-            <h4>{t("Password")}</h4>
+            <h4>{t('Password')}</h4>
             <Input name="password" type="password" id="password"></Input>
             <br></br>
-            <Button id="submit">{t("Submit")}</Button>
+            <Button id="submit">{t('Submit')}</Button>
             <br></br>
             {signUp_message}
           </Form>
@@ -66,4 +63,5 @@ const LoginForm = (props) => {
     </>
   );
 };
+
 export default LoginForm;

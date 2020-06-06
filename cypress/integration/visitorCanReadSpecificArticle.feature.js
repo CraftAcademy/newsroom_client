@@ -23,4 +23,19 @@ describe("visitor can read a specific article", () => {
     cy.get("#article-1-body").should("contain", "Lorem ipsum");
     cy.get("#article-2").should("not.exist")
   });
+
+  it("a smaller list of articles is displayed to the side", () => {
+    cy.get("#article-side-list").within(() => {
+      cy.get("#article-2").should("be.visible")
+      cy.get("#article-3").should("be.visible")
+      cy.get("#article-4").should("be.visible")
+      cy.get("#article-5").should("be.visible")
+    })
+  })
+
+  it("the articles in the list replace the current article, when clicked", () => {
+    cy.get("#article-2").click()
+    cy.get("#article-2-body").should("be.visible")
+    cy.get("#article-1-body").should("not.exist")
+  })
 });

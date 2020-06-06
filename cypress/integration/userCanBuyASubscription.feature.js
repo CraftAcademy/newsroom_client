@@ -32,7 +32,7 @@ describe("User can purchase a subscription on the subscribe page", () => {
         "contain",
         "Transaction was successful"
       );
-      cy.wait(3000);
+      cy.wait(2000);
       cy.get("#transaction-message").should("not.be.visible");
       cy.get("#subscriber-message").should("contain", "You are a subscriber!");
     });
@@ -47,7 +47,7 @@ describe("User can purchase a subscription on the subscribe page", () => {
         status: 400,
       });
       cy.logIn();
-      cy.wait(3000);
+      cy.wait(3000)
       cy.get("#subscription-link").contains("Subscribe").click();
       cy.wait(3000);
       cy.typeInStripeElement("cardnumber", "4242424242424242");
@@ -95,7 +95,8 @@ describe("User can purchase a subscription on the subscribe page", () => {
       cy.get("#sign-in-sign-up")
         .should("contain", "Log in or sign up to proceed")
         .click();
-      cy.get("#login-form").should("be.visible");
+      cy.get("#login-form")
+        .should("be.visible")
     });
   });
 });

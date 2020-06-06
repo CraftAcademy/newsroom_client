@@ -7,7 +7,7 @@ import "semantic-ui-css/semantic.min.css";
 import axios from "axios";
 import App from "./App";
 import { BrowserRouter } from "react-router-dom";
-import { StripeProvider } from "react-stripe-elements";
+import { StripeProvider } from 'react-stripe-elements'
 import "./css/index.css";
 
 if (process.env.NODE_ENV === "production") {
@@ -20,7 +20,7 @@ const store = configureStore();
 
 ReactDOM.render(
   <Provider store={store}>
-    <StripeProvider apiKey={process.env.REACT_APP_API_KEY}>
+    <StripeProvider apiKey="pk_test_21nBNjeqdyB1Mzm2VjDPQprF00kyEKYZSK">
       <BrowserRouter>
         <App />
       </BrowserRouter>

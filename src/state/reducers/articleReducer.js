@@ -7,6 +7,11 @@ const articleReducer = (state = initialState, action) => {
         ...state,
         activeArticle: action.payload,
       };
+    case "FETCH_ARTICLE_LIST":
+      return {
+        ...state,
+        articleList: action.payload,
+      }
     default:
       return state;
   }

@@ -11,12 +11,12 @@ import { useDispatch } from "react-redux";
 import { getPlace } from "./modules/location";
 import { persistLogin } from "./modules/auth";
 
-const App = () => {
+const App = (props) => {
   const [uid, setUid] = useState("");
   const [authenticated, setAuthenticated] = useState(false);
   const dispatch = useDispatch();
 
-  useEffect(async () => {
+  useEffect(() => {
     getPlace(dispatch);
     persistLogin(setAuthenticated, setUid);
   }, []);

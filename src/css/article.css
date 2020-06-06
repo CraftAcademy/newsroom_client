@@ -1,9 +1,11 @@
 .article-title {
-  position: absolute;
-  bottom: 30px;
+  position: relative;
   background-color: rgba(0,0,0,0.44);
   padding: 7px;
   padding-left: 40px;
+  width: fit-content;
+  max-width: inherit;
+  word-wrap: break-word;
 }
 
 .article-body {
@@ -11,17 +13,16 @@
   word-wrap: normal;
   font-size: 18px;
   color: #444444;
+  margin-top: 20px !important
 }
 
-.title-image {
-  text-align: left;
-}
-
-.title-image > * {
-  font-size: 160%
+#article-cards > * > * :hover {
+  transform: scale(1.007);
+  transition: 0.1s;
 }
 
 .published-at {
   font-size: 130%;
-  color: #888888
+  color: #888888;
+  margin-top: 20px !important
 }

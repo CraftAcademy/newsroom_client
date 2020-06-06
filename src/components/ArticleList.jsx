@@ -1,31 +1,24 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import { Grid } from "semantic-ui-react";
+import React, { useEffect } from "react";
+import { Grid, Container } from "semantic-ui-react";
 import ArticleCard from "../components/ArticleCard";
 import Ad from "./Ad";
 import mercedesImg from "../images/mercedesAd.jpg";
 import lagavulinImg from "../images/lagavulinAd.jpg";
 import "../css/article.css";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchArticleList } from '../modules/fetchArticles'
 
 const ArticleList = (props) => {
-  const [articleList, setArticleList] = useState([]);
+  const articleList = useSelector((state) => state.articles.articleList);
+  const location = useSelector((state) => state.location.country);
+  const dispatch = useDispatch()
   const category = props.match.params.category || "";
-  let location = useSelector((state) => state.location.country);
 
   useEffect(() => {
-    const fetchArticleList = async () => {
-      try {
-        const response = await axios.get("/articles", { location: location });
-        setArticleList(response.data.articles);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchArticleList();
+    fetchArticleList({dispatch, location});
   }, []);
 
-  let filteredArticles = () => {
+  const filteredArticles = () => {
     switch (category) {
       case "":
         return articleList;
@@ -40,9 +33,46 @@ const ArticleList = (props) => {
     }
   };
 
-  let articleCards = filteredArticles().map((article) => {
-    return <ArticleCard article={article} size={1}/>;
-  });
+  const buildArticleCards = () => {
+    const articleCards = [];
+    const filtered = filteredArticles();
+    let i = 0;
+    while (i < filtered.length) {
+      articleCards.push(
+        <Grid.Row style={{ padding: 0, margin: 1 }}>
+          <Grid.Column
+            stretched
+            style={{ padding: 0, margin: 0, width: "fit-content" }}
+          >
+            <Grid.Row>
+              <ArticleCard articleProp={filtered[i]} size={1} margin={2} />
+            </Grid.Row>
+            <Grid.Row>
+              <ArticleCard articleProp={filtered[i + 1]} size={1} margin={2} />
+            </Grid.Row>
+          </Grid.Column>
+          <Grid.Column
+            width={3}
+            style={{ padding: 0, marginLeft: 5, width: "fit-content" }}
+          >
+            <ArticleCard articleProp={filtered[i + 2]} size={2 / 3} margin={1} />
+            <ArticleCard articleProp={filtered[i + 3]} size={2 / 3} margin={1} />
+            <ArticleCard articleProp={filtered[i + 4]} size={2 / 3} margin={1} />
+          </Grid.Column>
+          <Grid.Column
+            width={3}
+            style={{ padding: 0, marginLeft: 5, width: "fit-content" }}
+          >
+            <ArticleCard articleProp={filtered[i + 5]} size={2 / 3} margin={1} />
+            <ArticleCard articleProp={filtered[i + 6]} size={2 / 3} margin={1} />
+            <ArticleCard articleProp={filtered[i + 7]} size={2 / 3} margin={1} />
+          </Grid.Column>
+        </Grid.Row>
+      );
+      i += 6;
+    }
+    return articleCards.reverse();
+  };
 
   let locationMessage =
     category == "local" &&
@@ -57,24 +87,31 @@ const ArticleList = (props) => {
     ));
 
   return (
-    <div>
-      <Grid id="articleCards" fluid columns={3} divided centered>
+    <Container align="center" style={{ width: "100%" }}>
+      <Container align="center" style={{ width: "100%", paddingTop: "10px" }}>
         <Ad
           link={"https://www.mercedes-benz.com/en/"}
           id={"ad-1"}
           img={mercedesImg}
           alt={"mercedes"}
         />
-        {locationMessage}
-        {articleCards}
-        <Ad
-          link={"https://www.malts.com/en-gb/visit-our-distilleries/lagavulin/"}
-          id={"ad-2"}
-          img={lagavulinImg}
-          alt={"lagavulin"}
-        />
+      </Container>
+      <Grid
+        id="article-cards"
+        centered
+        fluid
+        stackable
+        style={{ marginTop: "50px", maxWidth: "80%", minWidth: "1100px" }}
+      >
+        {buildArticleCards().reverse()}
       </Grid>
-    </div>
+      <Ad
+        link={"https://www.malts.com/en-gb/visit-our-distilleries/lagavulin/"}
+        id={"ad-2"}
+        img={lagavulinImg}
+        alt={"lagavulin"}
+      />
+    </Container>
   );
 };
 
